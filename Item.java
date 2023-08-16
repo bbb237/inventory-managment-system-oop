@@ -4,9 +4,8 @@ import java.io.Serializable;
 
 public class Item implements Serializable{
     private static int itemNum = 0;
-    private String name, nohp, notes;
+    private String name, notes, category;
     private int id, quantity;
-    private Category category;
 
     public Item() {
         itemNum++;
@@ -14,21 +13,16 @@ public class Item implements Serializable{
         quantity = 0;
         notes = "";
         id = itemNum;
-        category = null;
+        category = "";
     }
 
-    public Item(String name1, int quant, String notes1, String categ) {
+    public Item(String name1, int quant, String categ, String notes1) {
         itemNum++;
         name = name1;
         quantity = quant;
         notes = notes1;
         id = itemNum;
-        if (categ.isEmpty()) {
-            category = null;
-        }
-        else {
-            category = new Category(categ, "", this.id);
-        }
+        category = categ;
         
     }
 
@@ -44,8 +38,8 @@ public class Item implements Serializable{
         return quantity;
     }
 
-    public String getNohp() {
-        return nohp;
+    public String getCategory() {
+        return category;
     }
 
     public String getNotes() {
@@ -60,20 +54,28 @@ public class Item implements Serializable{
         name = x;
     }
 
-    public void setQuantity(int x) {
+    public boolean setQuantity(int x) {
+        if (x < 0) 
+            return false;
+
         quantity = x;
+        return true;
     }
 
-    public void setNohp(String x) {
-        nohp = x;
+    public void setCategory(String x) { //needs external validation
+        category = x;
     }
 
     public void setNotes(String x) {
         notes = x;
     }
 
-    public void setId(int x) {
+    public boolean setId(int x) {
+        if (x < 0) 
+            return false;
+
         id = x;
+        return true;
     }
 
     public static void setItemNum(int x) {
@@ -86,10 +88,10 @@ public class Item implements Serializable{
 
     public String toString() {
         return String.format("%-3d", getId())
-                + String.format("| %-19s", getName())
-                + String.format("| %-19d", getQuantity())
-                + String.format("| %-19s", getNohp())
-                + String.format("| %-19s", getNotes());
+                + String.format("| %-23s", getName())
+                + String.format("| %-23d", getQuantity())
+                + String.format("| %-23s", getCategory())
+                + String.format("| %-23s", getNotes());
     }
 }
 

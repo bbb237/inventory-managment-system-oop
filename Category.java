@@ -7,7 +7,7 @@ public class Category implements Serializable{
     private static int serialNum = 0;
     private String name, notes;
     private int id, quantity;
-    ArrayList<Integer> itemIDs;
+    ArrayList<Integer> itemList;
 
 
     public Category() {
@@ -16,7 +16,7 @@ public class Category implements Serializable{
         quantity = 0;
         notes = "";
         id = serialNum;
-        itemIDs = new ArrayList<>();
+        itemList = new ArrayList<>();
     }
 
     public Category(String name1, String notes1, int itemID) {
@@ -25,8 +25,17 @@ public class Category implements Serializable{
         quantity++;
         notes = notes1;
         id = serialNum;
-        itemIDs = new ArrayList<>();
-        itemIDs.add(itemID);
+        itemList = new ArrayList<>();
+        itemList.add(itemID);
+    }
+
+    public Category(String name1, String notes1) {
+        serialNum++;
+        name = name1;
+        quantity++;
+        notes = notes1;
+        id = serialNum;
+        itemList = new ArrayList<>();
     }
 
     public static int getSerialNum() {
@@ -41,10 +50,6 @@ public class Category implements Serializable{
         return quantity;
     }
 
-    public String getNohp() {
-        return nohp;
-    }
-
     public String getNotes() {
         return notes;
     }
@@ -52,25 +57,37 @@ public class Category implements Serializable{
     public int getId() {
         return id;
     }
+    
+    public ArrayList<Integer> getItemList() {
+        return itemList;
+    }
 
     public void setName(String x) {
         name = x;
     }
 
-    public void setQuantity(int x) {
+    public boolean setQuantity(int x) {
+        if (x < 0) 
+            return false;
+
         quantity = x;
+        return true;
     }
 
-    public void setNohp(String x) {
-        nohp = x;
+    public void setItemList(ArrayList<Integer> x) {
+        itemList = x;
     }
 
     public void setNotes(String x) {
         notes = x;
     }
 
-    public void setId(int x) {
+    public boolean setId(int x) {
+        if (x < 0) 
+            return false;
+
         id = x;
+        return true;
     }
 
     public static void setSerialNum(int x) {
@@ -85,8 +102,17 @@ public class Category implements Serializable{
         return String.format("%-3d", getId())
                 + String.format("| %-19s", getName())
                 + String.format("| %-19d", getQuantity())
-                + String.format("| %-19s", getNohp())
+                // + String.format("| %-19s", getNohp())
                 + String.format("| %-19s", getNotes());
+    }
+
+    public boolean addItem(int x) {
+        if (itemList.contains(x)) {
+            System.out.println("This item is already in this category.");
+            return false;
+        }
+        itemList.add(x);
+        return true;
     }
 }
 
