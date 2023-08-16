@@ -59,12 +59,17 @@ public class CategoriesMenu implements Fillable{
     public void exit(){
         in.close();
     }
+    public void deleteCategory() {
+
+    }
 
     @Override public void add() {
-        Item item = new Item();
+        // Item item = new Item();
         int quant = -1;
         String category="";
         String name = "";
+        String notes = "";
+        int categoryIndex;
 
         System.out.print("\nMain Window --> Add new Item Window:(Enter the following information)\n"
                 + "=============================================================================\n");
@@ -73,12 +78,12 @@ public class CategoriesMenu implements Fillable{
         while (true) {
             System.out.print("Name: ");
             name = in.nextLine();
-            if (inventory.isExisitingItem(name)) {
+            if (inventory.isExisitingItem(name) >= 0) {
                 System.out.println("An Item with that Name already Exists.\n");
             }
             else {break;}
         }
-        item.setName(name);
+        // item.setName(name);
 
         //Quantity field
         do {
@@ -95,7 +100,7 @@ public class CategoriesMenu implements Fillable{
                 continue;
             }
         } while (quant < 0);
-        item.setQuantity(quant);
+        // item.setQuantity(quant);
 
         //Category field
         if (!inventory.getCategories().isEmpty()) {
@@ -106,15 +111,21 @@ public class CategoriesMenu implements Fillable{
             System.out.println();
         }
         System.out.print("Category: ");
-        category = in.nextLine();
-        if (!inventory.isExisitingCategory(category) || category.isEmpty()) {
-            item.setCategory("");
+        if ((categoryIndex = inventory.isExisitingCategory(category)) < 0 || category.isEmpty()) {
+            // item.setCategory("");
+            category = "";
         }
-        else {item.setCategory(category);}
+        else {
+            // item.setCategory(category);
+            category = in.nextLine();
+        }
 
         //Notes field
         System.out.print("Notes: ");
-        item.setNotes(in.nextLine());
+        notes = in.nextLine();
+        // item.setNotes(notes);
+
+        inventory.addNewItem(name, quant, category, notes, categoryIndex);
 
         System.out.println("--------------------------------------------------------------------------\n"
                 + "New Item Was Added to the System\n");
@@ -131,21 +142,14 @@ public class CategoriesMenu implements Fillable{
             String category = "";
             String notes="";
             int quant;
-            Item selectedItem = null;
+            int itemIndex = 0, categoryIndex;
 
-            while (item != null) {
+            while (itemIndex >= 0) {
                 System.out.print("Enter Name of Item you Wish to Edit:  ");
                 item = in.nextLine();
                 
-                if (!inventory.isExisitingItem(item)) {
+                if ((itemIndex = inventory.isExisitingItem(item)) < 0) {
                     System.out.println("An Item with that Name doesn't Exist in the System.\n");
-                }
-            }
-    
-            for (Item i : inventory.getItems()) {
-                if (i.getName().equalsIgnoreCase(item)) {
-                    selectedItem = i;
-                    break;
                 }
             }
 
@@ -159,11 +163,10 @@ public class CategoriesMenu implements Fillable{
                 if (name.equals("")) {
                     break;
                 }
-                else if (inventory.isExisitingItem(name)) {
+                else if (inventory.isExisitingItem(name) >= 0) {
                     System.out.println("An Item with that Name already Exists.\n");
                 }
                 else {
-                    selectedItem.setName(name);
                     break;
                 }
             }
@@ -175,6 +178,7 @@ public class CategoriesMenu implements Fillable{
                     String skip = in.nextLine();
                     
                     if (skip.isEmpty()) {
+                        quant = -1;
                         break;
                     }
                     quant = Integer.parseInt(in.nextLine());
@@ -183,7 +187,6 @@ public class CategoriesMenu implements Fillable{
                         System.out.println("Quantity cannot be less than 0.\n");
                     }
                     else {
-                        selectedItem.setQuantity(quant);
                         break;
                     }
                 } catch (NumberFormatException e) {
@@ -202,27 +205,21 @@ public class CategoriesMenu implements Fillable{
             }
             
             System.out.print("Category: ");
-            category = in.nextLine();
-            if (category.equals("")) {}
-
-            else if (!inventory.isExisitingCategory(category)) {
-                selectedItem.setCategory("");
+            if ((categoryIndex = inventory.isExisitingCategory(category)) < 0) {
+                category = "";
             }
             else {
-                selectedItem.setCategory(category);
+                category = in.nextLine();
             }
             
             //Notes field
             System.out.print("Notes: ");
             notes = in.nextLine();
-            if (notes.equals("")) {}
 
-            else {
-                selectedItem.setNotes(notes);
-            }
+            inventory.editItem(name, quant, category, notes, itemIndex, categoryIndex);
 
             System.out.println("--------------------------------------------------------------------------\n"
                     + "All Changes to the Item were Saved.\n");
         }
-    }
+    }    
 }

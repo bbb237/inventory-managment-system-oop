@@ -38,40 +38,51 @@ public class Inventory {
         categories.clear();
     }
 
-    public boolean isExisitingItem(String name) {
+    public int isExisitingItem(String name) {
         for (Item i : items) {
             if (i.getName().equalsIgnoreCase(name)) {
-                return true;
+                return items.indexOf(i);
             }
         }
-        return false;
+        return -1;
     }
 
-    public boolean isExisitingCategory(String name) {
+    public int isExisitingCategory(String name) {
         for (Category i : categories) {
             if (i.getName().equalsIgnoreCase(name)) {
-                return true;
+                return categories.indexOf(i);
             }
         }
-        return false;
+        return -1;
     }
 
-
-    public int addNewItem(String name, int quants, String category, String note) {
-        if (categories.getItemList().contains(id)) {
-            System.out.println("This item is already in this category.");
+    public int addNewItem(String name, int quants, String category, String note, int categoryIndex) {
+        Item item = new Item(name, quants, category, note);
+        items.add(item);
+        if (!category.isEmpty()) {
+            categories.get(categoryIndex).addItem(item.getId());
         }
-        else {
-
-        }
+        return 0;
     }
 
-    public int addItemToCategory(int id) {
-        if (categories.getItemList().contains(id)) {
-            System.out.println("This item is already in this category.");
+    public int editItem(String name, int quants, String category, String note, int itemIndex, int categoryIndex) {
+        Item selectedItem = items.get(itemIndex);
+        if (!name.isEmpty()) {
+            selectedItem.setName(name);
         }
-        else {
 
+        if (quants >= 0) {
+            selectedItem.setQuantity(quants);
         }
+
+        if (!category.isEmpty()) {
+            selectedItem.setCategory(category);
+            categories.get(categoryIndex).addItem(selectedItem.getId());
+        }
+
+        if (!note.isEmpty()) {
+            selectedItem.setNotes(note);
+        }
+        return 0;
     }
 }
