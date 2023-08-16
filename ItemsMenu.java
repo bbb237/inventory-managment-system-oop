@@ -13,7 +13,7 @@ public class ItemsMenu implements Fillable {
     public void displayItems() {
         System.out.print(
                   "------------------------------------------------------------------------------------------------\n"
-                + "ID | Name                  | Quantity              | Category              | Notes\n"
+                + "ID | Name                  | Quantity              | Category              | Notes              \n"
                 + "------------------------------------------------------------------------------------------------\n");
 
         for (Item i : inventory.getItems()) {
@@ -23,7 +23,42 @@ public class ItemsMenu implements Fillable {
                 "------------------------------------------------------------------------------------------------\n");
     }
 
-    public void displaySearch(String name) {
+    public int displayOptions() {
+        int option = -1;
+        do {
+            try { 
+                System.out.print("\nITEM Window:\n===========\n"
+                    + "Choose one of the following options:\n"
+                    + "(1) Add New Item\n"
+                    + "(2) Edit Item\n"
+                    + "(3) Delete Item\n"
+                    + "(4) Search for Item by Name\n"
+                    + "(5) BACK TO MAIN MENU\n"
+                    + "Enter Your Choice: ");
+                    option = Integer.parseInt(in.nextLine());
+
+                if (option != 1 || option != 2 || option != 3
+                    || option != 4 || option != 5) {
+                    System.out.println("That is not an Option.\n");
+                }
+
+            } catch (NumberFormatException e) {
+                System.out.println("That is not an Option.\n");
+                continue;
+            }
+
+        } while (option != 1 || option != 2 || option != 3
+            || option != 4 || option != 5);
+
+        return option;
+    }
+    
+    public void displaySearch() {
+        String name;
+
+        System.out.print("Item Name: ");
+        name = in.nextLine();
+
         System.out.print("\nSearch Results for Items with Name [" + name + "]:\n"
                 + "------------------------------------------------------------------------------------------------\n"
                 + "ID | Name                  | Quantity              | Category              | Notes\n"
@@ -38,31 +73,30 @@ public class ItemsMenu implements Fillable {
                 "------------------------------------------------------------------------------------------------\n");
     }
 
-    public void displayOptions() {
-        String option = "";
-        do {
-            System.out.print("\nMain Window:\n===========\n"
-                    + "Choose one of the following options:\n"
-                    + "(1) Add New Item \n"
-                    + "(2) Edit Item\n"
-                    + "(3) Delete Item\n"
-                    + "(4) Search for Item by Name\n"
-                    + "(5) BACK TO MAIN MENU\n"
-                    + "Enter Your Choice: ");
-            option = in.nextLine();
+    public void deleteItem() {
+        if (inventory.getItems().isEmpty()) {
+            System.out.println("There are no Items in the System.\n");
+        }
+        else {
+            String name;
+            int itemIndex;
 
-        } while (!(option.equals("1")
-                || option.equals("2")
-                || option.equals("3")));
-
+            System.out.print("Choose an Item to Delete: ");
+            name = in.nextLine();
+            if ((itemIndex = inventory.isExisitingItem(name)) < 0) {
+                name = "";
+                System.out.println("An Item with that Name doesn't Exist in the System.\n");
+                return;
+            }
+            inventory.deleteItem(itemIndex);
+            System.out.println("Item was Deleted from the System\n");
+        }
     }
+
     public void exit(){
         in.close();
     }
-
-    public void deleteItem() {
-
-    }
+    
 
     @Override public void add() {
         // Item item = new Item();
@@ -112,14 +146,15 @@ public class ItemsMenu implements Fillable {
             System.out.println();
         }
         System.out.print("Category: ");
+        category = in.nextLine();
         if ((categoryIndex = inventory.isExisitingCategory(category)) < 0 || category.isEmpty()) {
             // item.setCategory("");
             category = "";
         }
-        else {
-            // item.setCategory(category);
-            category = in.nextLine();
-        }
+        // else {
+        //     // item.setCategory(category);
+        //     category = in.nextLine();
+        // }
 
         //Notes field
         System.out.print("Notes: ");
@@ -139,13 +174,13 @@ public class ItemsMenu implements Fillable {
         }
         else {
             String item = null;
-            String name = null;
+            String name;
             String category = "";
             String notes="";
             int quant;
-            int itemIndex = 0, categoryIndex;
+            int itemIndex = -1, categoryIndex;
 
-            while (itemIndex >= 0) {
+            while (itemIndex < 0) {
                 System.out.print("Enter Name of Item you Wish to Edit:  ");
                 item = in.nextLine();
                 
@@ -162,6 +197,7 @@ public class ItemsMenu implements Fillable {
                 System.out.print("Name: ");
                 name = in.nextLine();
                 if (name.equals("")) {
+                    name = "";
                     break;
                 }
                 else if (inventory.isExisitingItem(name) >= 0) {
@@ -206,11 +242,9 @@ public class ItemsMenu implements Fillable {
             }
             
             System.out.print("Category: ");
+            category = in.nextLine();
             if ((categoryIndex = inventory.isExisitingCategory(category)) < 0) {
                 category = "";
-            }
-            else {
-                category = in.nextLine();
             }
             
             //Notes field

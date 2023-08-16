@@ -3,31 +3,31 @@ package finalProject;
 import java.io.Serializable;
 
 public class Item implements Serializable{
-    private static int itemNum = 0;
+    private static int idNum = 0;
     private String name, notes, category;
     private int id, quantity;
 
     public Item() {
-        itemNum++;
+        idNum++;
         name = "";
         quantity = 0;
         notes = "";
-        id = itemNum;
+        id = idNum;
         category = "";
     }
 
     public Item(String name1, int quant, String categ, String notes1) {
-        itemNum++;
+        idNum++;
         name = name1;
         quantity = quant;
         notes = notes1;
-        id = itemNum;
+        id = idNum;
         category = categ;
         
     }
 
-    public static int getItemNum() {
-        return itemNum;
+    public static int getidNum() {
+        return idNum;
     }
 
     public String getName() {
@@ -78,12 +78,12 @@ public class Item implements Serializable{
         return true;
     }
 
-    public static void setItemNum(int x) {
-        itemNum = x;
+    public static void setidNum(int x) {
+        idNum = x;
     }
 
-    public static void resetItemNum() {
-        itemNum = 0;
+    public static void resetidNum() {
+        idNum = 0;
     }
 
     public String toString() {

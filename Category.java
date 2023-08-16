@@ -4,42 +4,42 @@ import java.io.Serializable;
 import java.util.*;
 
 public class Category implements Serializable{
-    private static int serialNum = 0;
+    private static int idNum = 0;
     private String name, notes;
     private int id, quantity;
-    ArrayList<Integer> itemList;
+    ArrayList<Item> itemList;
 
 
     public Category() {
-        serialNum++;
+        idNum++;
         name = "";
         quantity = 0;
         notes = "";
-        id = serialNum;
+        id = idNum;
         itemList = new ArrayList<>();
     }
 
-    public Category(String name1, String notes1, int itemID) {
-        serialNum++;
+    public Category(String name1, String notes1, Item item) {
+        idNum++;
         name = name1;
         quantity++;
         notes = notes1;
-        id = serialNum;
-        itemList = new ArrayList<>();
-        itemList.add(itemID);
+        id = idNum;
+        itemList = new ArrayList<Item>();
+        itemList.add(item);
     }
 
     public Category(String name1, String notes1) {
-        serialNum++;
+        idNum++;
         name = name1;
         quantity++;
         notes = notes1;
-        id = serialNum;
-        itemList = new ArrayList<>();
+        id = idNum;
+        itemList = new ArrayList<Item>();
     }
 
-    public static int getSerialNum() {
-        return serialNum;
+    public static int getidNum() {
+        return idNum;
     }
 
     public String getName() {
@@ -58,7 +58,7 @@ public class Category implements Serializable{
         return id;
     }
     
-    public ArrayList<Integer> getItemList() {
+    public ArrayList<Item> getItemList() {
         return itemList;
     }
 
@@ -74,7 +74,7 @@ public class Category implements Serializable{
         return true;
     }
 
-    public void setItemList(ArrayList<Integer> x) {
+    public void setItemList(ArrayList<Item> x) {
         itemList = x;
     }
 
@@ -90,29 +90,30 @@ public class Category implements Serializable{
         return true;
     }
 
-    public static void setSerialNum(int x) {
-        serialNum = x;
+    public static void setidNum(int x) {
+        idNum = x;
     }
 
-    public static void resetSerialNum() {
-        serialNum = 0;
+    public static void resetidNum() {
+        idNum = 0;
     }
 
     public String toString() {
         return String.format("%-3d", getId())
-                + String.format("| %-19s", getName())
-                + String.format("| %-19d", getQuantity())
+                + String.format("| %-30s", getName())
+                + String.format("| %-30d", getQuantity())
                 // + String.format("| %-19s", getNohp())
-                + String.format("| %-19s", getNotes());
+                + String.format("| %-30s", getNotes());
     }
 
-    public boolean addItem(int x) {
-        if (itemList.contains(x)) {
-            System.out.println("This item is already in this category.");
-            return false;
-        }
+    public void addItem(Item x) {
         itemList.add(x);
-        return true;
+        quantity = itemList.size();
+    }
+
+    public void deleteItem(Item x) {
+        itemList.remove(x);
+        quantity = itemList.size();
     }
 }
 
