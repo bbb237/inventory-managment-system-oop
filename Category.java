@@ -22,7 +22,7 @@ public class Category implements Serializable{
     public Category(String name1, String notes1, Item item) {
         idNum++;
         name = name1;
-        quantity++;
+        quantity = 0;
         notes = notes1;
         id = idNum;
         itemList = new ArrayList<Item>();
@@ -32,7 +32,7 @@ public class Category implements Serializable{
     public Category(String name1, String notes1) {
         idNum++;
         name = name1;
-        quantity++;
+        quantity = 0;
         notes = notes1;
         id = idNum;
         itemList = new ArrayList<Item>();
@@ -100,10 +100,10 @@ public class Category implements Serializable{
 
     public String toString() {
         return String.format("%-3d", getId())
-                + String.format("| %-30s", getName())
-                + String.format("| %-30d", getQuantity())
+                + String.format("| %-29s", getName())
+                + String.format("| %-29d", getQuantity())
                 // + String.format("| %-19s", getNohp())
-                + String.format("| %-30s", getNotes());
+                + String.format("| %-29s", getNotes());
     }
 
     public void addItem(Item x) {

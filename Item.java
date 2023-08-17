@@ -23,7 +23,6 @@ public class Item implements Serializable{
         notes = notes1;
         id = idNum;
         category = categ;
-        
     }
 
     public static int getidNum() {
@@ -88,10 +87,10 @@ public class Item implements Serializable{
 
     public String toString() {
         return String.format("%-3d", getId())
-                + String.format("| %-23s", getName())
-                + String.format("| %-23d", getQuantity())
-                + String.format("| %-23s", getCategory())
-                + String.format("| %-23s", getNotes());
+                + String.format("| %-22s", getName())
+                + String.format("| %-22d", getQuantity())
+                + String.format("| %-22s", getCategory())
+                + String.format("| %-22s", getNotes());
     }
 }
 

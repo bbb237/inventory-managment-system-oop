@@ -6,13 +6,13 @@ public class CategoriesMenu implements Fillable{
     private Scanner in;
     private Inventory inventory = Inventory.getInstance();
 
-    public CategoriesMenu() {
-        in = new Scanner(System.in);
+    public CategoriesMenu(Scanner scan) {
+        in = scan;
     }
 
     public void displayCategories() {
-        System.out.print(
-                  "------------------------------------------------------------------------------------------------\n"
+        System.out.print("\nCATEGORIES:\n"
+                + "------------------------------------------------------------------------------------------------\n"
                 + "ID | Name                         | Quantity of Items            | Notes                        \n"
                 + "------------------------------------------------------------------------------------------------\n");
 
@@ -37,25 +37,25 @@ public class CategoriesMenu implements Fillable{
                     + "Enter Your Choice: ");
                     option = Integer.parseInt(in.nextLine());
 
-                if (option != 1 || option != 2 || option != 3
-                    || option != 4 || option != 5) {
+                if (!(option == 1 || option == 2 || option == 3
+                || option == 4 || option == 5)) {
                     System.out.println("That is not an Option.\n");
                 }
+                else {return option;}
 
             } catch (NumberFormatException e) {
                 System.out.println("That is not an Option.\n");
                 continue;
             }
-            
-        } while (option != 1 || option != 2 || option != 3
-            || option != 4 || option != 5);
+            return option;
+        } while (option != 5);
 
         return option;
     }
    
     public void displayViewItems() {
         if (inventory.getCategories().isEmpty()) {
-            System.out.println("There are no Categories in the System.\n");
+            System.out.println("\nThere are no Categories in the System.\n");
         }
         else {
             String name;
@@ -85,7 +85,7 @@ public class CategoriesMenu implements Fillable{
 
     public void deleteCategory() {
         if (inventory.getCategories().isEmpty()) {
-            System.out.println("There are no Categories in the System.\n");
+            System.out.println("\nThere are no Categories in the System.\n");
         }
         else {
             String name;
@@ -103,9 +103,6 @@ public class CategoriesMenu implements Fillable{
         }
     }
 
-    public void exit(){
-        in.close();
-    }
 
     @Override public void add() {
         // Item item = new Item();
@@ -179,7 +176,7 @@ public class CategoriesMenu implements Fillable{
     @Override
     public void edit() {
         if (inventory.getCategories().isEmpty()) {
-            System.out.println("There are no Categories in the System.\n");
+            System.out.println("\nThere are no Categories in the System.\n");
         }
         else {
             String name;

@@ -6,14 +6,14 @@ public class ItemsMenu implements Fillable {
     private Scanner in;
     private Inventory inventory = Inventory.getInstance();
 
-    public ItemsMenu() {
-        in = new Scanner(System.in);
+    public ItemsMenu(Scanner scan) {
+        in = scan;
     }
 
     public void displayItems() {
-        System.out.print(
-                  "------------------------------------------------------------------------------------------------\n"
-                + "ID | Name                  | Quantity              | Category              | Notes              \n"
+        System.out.print("\nITEMS:\n"
+                + "------------------------------------------------------------------------------------------------\n"
+                + "ID | Name                  | Quantity              | Category              | Notes                \n"
                 + "------------------------------------------------------------------------------------------------\n");
 
         for (Item i : inventory.getItems()) {
@@ -37,18 +37,18 @@ public class ItemsMenu implements Fillable {
                     + "Enter Your Choice: ");
                     option = Integer.parseInt(in.nextLine());
 
-                if (option != 1 || option != 2 || option != 3
-                    || option != 4 || option != 5) {
+                if (!(option == 1 || option == 2 || option == 3
+                    || option == 4 || option == 5)) {
                     System.out.println("That is not an Option.\n");
                 }
+                else {return option;}
 
             } catch (NumberFormatException e) {
                 System.out.println("That is not an Option.\n");
                 continue;
             }
-
-        } while (option != 1 || option != 2 || option != 3
-            || option != 4 || option != 5);
+            
+        } while (option != 5);
 
         return option;
     }
@@ -75,7 +75,7 @@ public class ItemsMenu implements Fillable {
 
     public void deleteItem() {
         if (inventory.getItems().isEmpty()) {
-            System.out.println("There are no Items in the System.\n");
+            System.out.println("\nThere are no Items in the System.\n");
         }
         else {
             String name;
@@ -91,10 +91,6 @@ public class ItemsMenu implements Fillable {
             inventory.deleteItem(itemIndex);
             System.out.println("Item was Deleted from the System\n");
         }
-    }
-
-    public void exit(){
-        in.close();
     }
     
 
@@ -139,7 +135,7 @@ public class ItemsMenu implements Fillable {
 
         //Category field
         if (!inventory.getCategories().isEmpty()) {
-            System.out.println("Select One of the Following Categories (Default is Blank): ");
+            System.out.println("\nSelect One of the Following Categories (Default is Blank): ");
             for (Category i : inventory.getCategories()) {
                 System.out.println("-> " + i.getName());
             }
@@ -170,7 +166,7 @@ public class ItemsMenu implements Fillable {
     @Override
     public void edit() {
         if (inventory.getItems().isEmpty()) {
-            System.out.println("There are no Items in the System.\n");
+            System.out.println("\nThere are no Items in the System.\n");
         }
         else {
             String item = null;
@@ -218,7 +214,7 @@ public class ItemsMenu implements Fillable {
                         quant = -1;
                         break;
                     }
-                    quant = Integer.parseInt(in.nextLine());
+                    quant = Integer.parseInt(skip);
 
                     if (quant < 0) {
                         System.out.println("Quantity cannot be less than 0.\n");
@@ -234,7 +230,7 @@ public class ItemsMenu implements Fillable {
 
             //Category field
             if (!inventory.getCategories().isEmpty()) {
-                System.out.println("Select One of the Following Categories (Default is Blank): ");
+                System.out.println("\nSelect One of the Following Categories (Default is Blank): ");
                 for (Category i : inventory.getCategories()) {
                     System.out.println("-> " + i.getName());
                 }

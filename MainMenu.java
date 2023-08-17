@@ -8,18 +8,20 @@ public class MainMenu {
     private ItemsMenu itemsMenu;
     private CategoriesMenu categoriesMenu;
 
-    public MainMenu() {
-        in = new Scanner(System.in);
-        itemsMenu = new ItemsMenu();
-        categoriesMenu = new CategoriesMenu();
+    public MainMenu(Scanner scan) {
+        in = scan;
+        itemsMenu = new ItemsMenu(in);
+        categoriesMenu = new CategoriesMenu(in);
     }
 
     public void displayOptions() {
         int optionMain = -1;
         int optionItem = -1;
         int optionCategory = -1;
+        boolean jump = false;
         do {
             try {
+                jump = false;
                 System.out.print("\nMain Window:\n===========\n"
                     + "Choose one of the following options:\n"
                     + "(1) ITEMS\n"
@@ -28,12 +30,16 @@ public class MainMenu {
                     + "Enter Your Choice: ");
                 optionMain = Integer.parseInt(in.nextLine());
 
-                if (optionMain != 1 || optionMain != 2 || optionMain != 3) {
+                if (!(optionMain == 1 || optionMain == 2 || optionMain == 3)) {
                     System.out.println("That is not an Option.\n");
                 }
 
             } catch (NumberFormatException e) {
                 System.out.println("That is not an Option.\n");
+                continue;
+            }
+            catch (NoSuchElementException e) {
+                System.out.println("Test.\n");
                 continue;
             }
 
@@ -52,10 +58,10 @@ public class MainMenu {
                             itemsMenu.deleteItem();
                             break;
                         case 4:
-                            itemsMenu.displayItems();
+                            itemsMenu.displaySearch();
                             break;
                         case 5:
-                            itemsMenu.exit();
+                            jump = true;
                             break;
                     }
                 }
@@ -79,16 +85,19 @@ public class MainMenu {
                             categoriesMenu.displayViewItems();
                             break;
                         case 5:
-                            categoriesMenu.exit();
+                            jump = true;
                             break;
                     }
                 }
             }
-
+            if (jump) {
+                optionCategory = -1;
+                optionItem = -1;
+                continue;
+            }
         } while (optionMain != 3);
         in.close();
         return;
-        
     }
 
 }
