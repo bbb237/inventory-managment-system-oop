@@ -131,7 +131,6 @@ public class ItemsMenu implements Fillable {
                 continue;
             }
         } while (quant < 0);
-        // item.setQuantity(quant);
 
         //Category field
         if (!inventory.getCategories().isEmpty()) {
@@ -144,13 +143,8 @@ public class ItemsMenu implements Fillable {
         System.out.print("Category: ");
         category = in.nextLine();
         if ((categoryIndex = inventory.isExisitingCategory(category)) < 0 || category.isEmpty()) {
-            // item.setCategory("");
             category = "";
         }
-        // else {
-        //     // item.setCategory(category);
-        //     category = in.nextLine();
-        // }
 
         //Notes field
         System.out.print("Notes: ");

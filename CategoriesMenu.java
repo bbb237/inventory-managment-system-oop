@@ -105,12 +105,8 @@ public class CategoriesMenu implements Fillable{
 
 
     @Override public void add() {
-        // Item item = new Item();
-        // int quant = -1;
-        // String category="";
         String name = "";
         String notes = "";
-        // int categoryIndex;
 
         System.out.print("\nMain Window --> Add new Category Window:(Enter the following information)\n"
                 + "=============================================================================\n");
@@ -124,48 +120,10 @@ public class CategoriesMenu implements Fillable{
             }
             else {break;}
         }
-        // item.setName(name);
-
-        //Quantity field
-        // do {
-        //     try {
-        //         System.out.print("Quantity: ");
-        //         quant = Integer.parseInt(in.nextLine());
-                
-        //         if (quant < 0) {
-        //             System.out.println("Quantity cannot be less than 0.\n");
-        //         }
-
-        //     } catch (NumberFormatException e) {
-        //         System.out.println("Please enter a whole number.\n");
-        //         continue;
-        //     }
-        // } while (quant < 0);
-        // item.setQuantity(quant);
-
-        //Category field
-        // if (!inventory.getCategories().isEmpty()) {
-        //     System.out.println("Select One of the Following Categories (Default is Blank): ");
-        //     for (Category i : inventory.getCategories()) {
-        //         System.out.println("-> " + i.getName());
-        //     }
-        //     System.out.println();
-        // }
-        // System.out.print("Category: ");
-        // category = in.nextLine();
-        // if ((categoryIndex = inventory.isExisitingCategory(category)) < 0 || category.isEmpty()) {
-        //     // item.setCategory("");
-        //     category = "";
-        // }
-        // else {
-        //     // item.setCategory(category);
-        //     category = in.nextLine();
-        // }
 
         //Notes field
         System.out.print("Notes: ");
         notes = in.nextLine();
-        // item.setNotes(notes);
 
         inventory.addNewCategory(name, notes);
 
@@ -211,45 +169,6 @@ public class CategoriesMenu implements Fillable{
                     break;
                 }
             }
-            
-            // //Quantity field
-            // while (true) {
-            //     try {
-            //         System.out.print("Quantity: ");
-            //         String skip = in.nextLine();
-                    
-            //         if (skip.isEmpty()) {
-            //             quant = -1;
-            //             break;
-            //         }
-            //         quant = Integer.parseInt(in.nextLine());
-
-            //         if (quant < 0) {
-            //             System.out.println("Quantity cannot be less than 0.\n");
-            //         }
-            //         else {
-            //             break;
-            //         }
-            //     } catch (NumberFormatException e) {
-            //         System.out.println("Please enter a whole number.\n");
-            //         continue;
-            //     }
-            // }
-
-            // //Category field
-            // if (!inventory.getCategories().isEmpty()) {
-            //     System.out.println("Select One of the Following Categories (Default is Blank): ");
-            //     for (Category i : inventory.getCategories()) {
-            //         System.out.println("-> " + i.getName());
-            //     }
-            //     System.out.println();
-            // }
-            
-            // System.out.print("Category: ");
-            // category = in.nextLine();
-            // if ((categoryIndex = inventory.isExisitingCategory(category)) < 0) {
-            //     category = "";
-            // }
             
             //Notes field
             System.out.print("Notes: ");

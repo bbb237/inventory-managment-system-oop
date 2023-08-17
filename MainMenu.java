@@ -4,7 +4,6 @@ import java.util.*;
 
 public class MainMenu {
     private Scanner in;
-    private Inventory inventory = Inventory.getInstance();
     private ItemsMenu itemsMenu;
     private CategoriesMenu categoriesMenu;
 

@@ -19,16 +19,6 @@ public class Category implements Serializable{
         itemList = new ArrayList<>();
     }
 
-    public Category(String name1, String notes1, Item item) {
-        idNum++;
-        name = name1;
-        quantity = 0;
-        notes = notes1;
-        id = idNum;
-        itemList = new ArrayList<Item>();
-        itemList.add(item);
-    }
-
     public Category(String name1, String notes1) {
         idNum++;
         name = name1;
@@ -102,7 +92,6 @@ public class Category implements Serializable{
         return String.format("%-3d", getId())
                 + String.format("| %-29s", getName())
                 + String.format("| %-29d", getQuantity())
-                // + String.format("| %-19s", getNohp())
                 + String.format("| %-29s", getNotes());
     }
 
