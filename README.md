@@ -1,4 +1,4 @@
-# cs407
+## cs407 Final Project
 Inventory Management System (Java)
 Inventory system that begins in the MAIN MENU with the following options: 
 - ITEMS
